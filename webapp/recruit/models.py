@@ -42,7 +42,6 @@ class Applicant(models.Model):
     """
     사용자(지원자)
     """
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(
         validators=[MinLengthValidator(2)],
         max_length=32,
