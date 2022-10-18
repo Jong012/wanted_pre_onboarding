@@ -24,9 +24,9 @@
     - 회사명(varchar)
     - 국가(varchar)
     - 지역(varchar)
-2. 사용자(Applicant)
+2. 구직자(Applicant)
     - id(pk - serial)
-    - 사용자명(varchar)
+    - 구직자 이름(varchar)
     - 이메일(varchar)
     - 사용기술(varchar)
 3. 채용공고(JobPosting)
@@ -39,7 +39,7 @@
 4. 지원내역(ApplicationHistory)   
     - 제약사항: 채용공고당 1회만 지원 가능함
     - 채용공고_id(fk)
-    - 사용자_id(fk)
+    - 구직자_id(fk)
 
 ## 요구사항 정의
 ### 1. 채용공고를 등록한다.
