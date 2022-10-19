@@ -1,6 +1,7 @@
 # Create your views here.
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework.exceptions import ValidationError
 from rest_framework.filters import SearchFilter
 
 from recruit.models import Applicant, Company, JobPosting, ApplicationHistory
@@ -49,3 +50,13 @@ class ApplicationHistoryViewSet(viewsets.ModelViewSet):
     queryset = ApplicationHistory.objects.all().order_by('-id')
     serializer_class = ApplicationHistorySerializer
     permission_classes = [permissions.AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        qs = self.queryset.filter(
+            job_posting=request.data['job_posting'],
+            applicant=request.data['applicant'],
+        )
+        if qs.exists():
+            raise ValidationError('지원은 한번만 가능합니다.')
+
+        return super(ApplicationHistoryViewSet, self).create(request, *args, **kwargs)
