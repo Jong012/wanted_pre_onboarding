@@ -54,6 +54,5 @@ class JobPostingDetailSerializer(JobPostingSerializer):
 
 class ApplicationHistorySerializer(serializers.ModelSerializer):
     class Meta:
-        read_only_fields = '__all__'
         model = models.ApplicationHistory
         fields = '__all__'
