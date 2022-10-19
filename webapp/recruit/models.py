@@ -57,6 +57,9 @@ class Applicant(models.Model):
             models.UniqueConstraint(fields=['name', 'email'], name='unique_applicant_name_email'),
         ]
 
+    def __str__(self):
+        return f'{self.name}({self.email}) - skill: {self.skill}'
+
 
 class JobPosting(models.Model):
     """
@@ -75,7 +78,7 @@ class JobPosting(models.Model):
         db_table = 'job_posting'
 
     def __str__(self):
-        return f'{self.company_id}: {self.title}'
+        return f'{self.title}({self.company.name}) - {self.skill}'
 
 
 class ApplicationHistory(models.Model):
@@ -94,3 +97,6 @@ class ApplicationHistory(models.Model):
                 fields=['job_posting', 'applicant'],
                 name='unique_applicant_history_job_posting_applicant'),
         ]
+
+    def __str__(self):
+        return f'{self.job_posting.title} - {self.applicant.name}'
