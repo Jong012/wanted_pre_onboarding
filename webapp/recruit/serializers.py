@@ -12,8 +12,6 @@ class ApplicantSerializer(serializers.ModelSerializer):
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    job_postings = serializers.StringRelatedField(many=True)
-
     class Meta:
         model = models.Company
         read_only_fields = ('id',)
