@@ -25,10 +25,31 @@ class CompanySerializer(serializers.ModelSerializer):
 
 
 class JobPostingSerializer(serializers.ModelSerializer):
+    company__name = serializers.ReadOnlyField(source='company.name')
+    company__country = serializers.ReadOnlyField(source='company.country.name')
+    company__region = serializers.ReadOnlyField(source='company.region')
+
     class Meta:
         model = models.JobPosting
         read_only_fields = ('id',)
-        fields = ['company', 'title', 'content', 'skill', 'recruit_compensation', 'recruit_position']
+        fields = [
+            'id',
+            'company', 'company__name',
+            'company__country', 'company__region',
+            'title', 'skill', 'recruit_compensation', 'recruit_position']
+
+class JobPostingListSerializer(JobPostingSerializer):
+    pass
+
+class JobPostingDetailSerializer(JobPostingSerializer):
+    job_postings = serializers.SerializerMethodField()
+
+    class Meta(JobPostingSerializer.Meta):
+        fields = JobPostingSerializer.Meta.fields + ['content', 'job_postings']
+
+    @staticmethod
+    def get_job_postings(obj):
+        return [x.id for x in obj.company.job_postings.all()]
 
 
 class ApplicationHistorySerializer(serializers.ModelSerializer):
