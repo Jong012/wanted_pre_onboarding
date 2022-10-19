@@ -8,7 +8,7 @@ from .models import Company
 class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Applicant
-        fields = ['cmopany', 'name', 'email', 'skill']
+        fields = ['name', 'email', 'skill']
 
 
 class CompanySerializer(serializers.ModelSerializer):
